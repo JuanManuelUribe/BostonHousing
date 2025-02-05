@@ -54,9 +54,9 @@ def main():
     )
 
     # Barra lateral con información sobre los modelos evaluados
-    st.sidebar.header("Hiperparámetros Evaluados")
+    st.sidebar.header("Hiperparámetros")
     st.sidebar.markdown(""" 
-    Se probaron diferentes modelos con diversas configuraciones de hiperparámetros. Los principales modelos evaluados fueron:
+    Se probaron diferentes modelos con diversas configuraciones de hiperparámetros. Los modelos evaluados fueron:
 
     - *ElasticNet con StandardScaler* (Mejor MAE: 3.4372)
     - *Kernel Ridge con StandardScaler* (Mejor MAE: 2.6156, modelo seleccionado)
