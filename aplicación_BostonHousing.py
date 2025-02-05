@@ -33,7 +33,7 @@ def main():
         .main-title {
             font-size: 32px;
             font-weight: bold;
-            color: #000000;
+            color: #1E90FF;
             text-align: center;
         }
         .description {
