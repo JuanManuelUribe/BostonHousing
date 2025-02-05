@@ -1,18 +1,23 @@
 import streamlit as st
 import pickle
 import numpy as np
+import gzip
 
-# Función para cargar el modelo preentrenado
+# Función para cargar el modelo preentrenado desde un archivo comprimido .pkl.gz
 def load_model():
-    """Carga el modelo preentrenado con el mejor ajuste encontrado."""
-    with open('model_trained_regressor.pkl', 'rb') as f:
-        model = pickle.load(f)  # Puede ser un Pipeline con StandardScaler + Kernel Ridge
-    return model
+    """Carga el modelo preentrenado desde un archivo comprimido .pkl.gz."""
+    model_path = 'model_trained_regressor.pkl.gz'
+    try:
+        with gzip.open(model_path, 'rb') as f:
+            model = pickle.load(f)  # Carga el modelo descomprimido
+        return model
+    except Exception as e:
+        raise RuntimeError(f"Error al cargar el modelo: {e}")
 
 # Cargar el modelo una sola vez al inicio
 model = load_model()
 
-# Hiperparámetros óptimos encontrados en la búsqueda del profesor
+# Hiperparámetros óptimos encontrados
 best_model_name = "Kernel Ridge"
 best_scaler = "StandardScaler"
 best_hyperparams = {
@@ -20,7 +25,6 @@ best_hyperparams = {
     "kernel": "rbf"
 }
 
-# Función principal de la aplicación Streamlit
 def main():
     # Estilos personalizados
     st.markdown(
@@ -49,7 +53,7 @@ def main():
         unsafe_allow_html=True
     )
 
-    # Barra lateral con los hiperparámetros evaluados
+    # Barra lateral con información sobre los modelos evaluados
     st.sidebar.header("Hiperparámetros Evaluados")
     st.sidebar.markdown(""" 
     Se probaron diferentes modelos con diversas configuraciones de hiperparámetros. Los principales modelos evaluados fueron:
@@ -82,13 +86,13 @@ def main():
     CRIM = st.number_input("CRIM - Tasa de criminalidad", value=0.1)
     ZN = st.number_input("ZN - Proporción de terrenos residenciales zonificados", value=0.0)
     INDUS = st.number_input("INDUS - Proporción de acres de negocios no minoristas", value=10.0)
-    CHAS = st.number_input("CHAS - Proximidad al río Charles (0 o 1)", min_value=0, max_value=1, value=0)
+    CHAS = st.number_input("CHAS - Proximidad al río Charles (0 o 1)", value=0)
     NOX = st.number_input("NOX - Concentración de óxidos de nitrógeno", value=0.5)
     RM = st.number_input("RM - Número promedio de habitaciones", value=6.0)
     AGE = st.number_input("AGE - Proporción de casas antiguas", value=50.0)
     DIS = st.number_input("DIS - Distancia a centros de empleo", value=5.0)
-    RAD = st.number_input("RAD - Índice de accesibilidad a carreteras", min_value=1, max_value=24, value=4)
-    TAX = st.number_input("TAX - Tasa de impuestos", min_value=1, value=300)
+    RAD = st.number_input("RAD - Índice de accesibilidad a carreteras", value=4)
+    TAX = st.number_input("TAX - Tasa de impuestos", value=300)
     PTRATIO = st.number_input("PTRATIO - Relación alumno/profesor", value=18)
     B = st.number_input("B - Proporción de residentes afroamericanos", value=400)
     LSTAT = st.number_input("LSTAT - Porcentaje de población de bajo estatus", value=12.0)
@@ -109,4 +113,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
