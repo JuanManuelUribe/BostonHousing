@@ -82,13 +82,13 @@ def main():
     CRIM = st.number_input("CRIM - Tasa de criminalidad", value=0.1)
     ZN = st.number_input("ZN - Proporción de terrenos residenciales zonificados", value=0.0)
     INDUS = st.number_input("INDUS - Proporción de acres de negocios no minoristas", value=10.0)
-    CHAS = st.number_input("CHAS - Proximidad al río Charles (0 o 1)", value=0)
+    CHAS = st.number_input("CHAS - Proximidad al río Charles (0 o 1)", min_value=0, max_value=1, value=0)
     NOX = st.number_input("NOX - Concentración de óxidos de nitrógeno", value=0.5)
     RM = st.number_input("RM - Número promedio de habitaciones", value=6.0)
     AGE = st.number_input("AGE - Proporción de casas antiguas", value=50.0)
     DIS = st.number_input("DIS - Distancia a centros de empleo", value=5.0)
-    RAD = st.number_input("RAD - Índice de accesibilidad a carreteras", value=4)
-    TAX = st.number_input("TAX - Tasa de impuestos", value=300)
+    RAD = st.number_input("RAD - Índice de accesibilidad a carreteras", min_value=1, max_value=24, value=4)
+    TAX = st.number_input("TAX - Tasa de impuestos", min_value=1, value=300)
     PTRATIO = st.number_input("PTRATIO - Relación alumno/profesor", value=18)
     B = st.number_input("B - Proporción de residentes afroamericanos", value=400)
     LSTAT = st.number_input("LSTAT - Porcentaje de población de bajo estatus", value=12.0)
@@ -107,5 +107,6 @@ def main():
     # Footer
     st.markdown('<div class="footer">© 2025 - Predicción de precios con Streamlit</div>', unsafe_allow_html=True)
 
-if _name_ == "_main_":
-    main()
+if __name__ == "__main__":
+    main()
+
